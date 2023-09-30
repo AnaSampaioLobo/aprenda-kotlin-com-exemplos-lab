@@ -1,21 +1,30 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
+enum class Nivel { BASICO, INTERMEDIARIO, AVANÇADO }
 
-enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
+data class Usuario(val id: Long, val name: String)
 
-class Usuario
+data class ConteudoEducacional(val id: Long, var nome: String, val duracao: Int = 60)
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
-
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+data class Formacao(val id: Long, val nome: String, val nivel: Nivel, val conteudos: List<ConteudoEducacional>) {
 
     val inscritos = mutableListOf<Usuario>()
     
     fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+        this.inscritos.add(usuario)
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+   val anaUsuario = Usuario(1L, "Ana")
+	val loboUsuario = Usuario(2L, "Lobo")
+
+    val dockerConteudo = ConteudoEducacional(1L, "Docker Fundamentals", 120)
+    val kubernetesConteudo = ConteudoEducacional(12, "Kubernetes Fundamentals", 180)
+    val conteudos = listOf(dockerConteudo, kubernetesConteudo)
+
+    val formacao = Formacao(1L, "DevOps Fundamentals", Nivel.AVANÇADO, conteudos)
+    formacao.matricular(anaUsuario)
+    formacao.matricular(loboUsuario)
+
+    println("Formação: $formacao")
+	println("Inscritos: ${formacao.inscritos}")
 }
